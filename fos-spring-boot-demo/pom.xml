@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.fos</groupId>
+	<artifactId>spring-boot-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<name>FOS Spring Boot Intro</name>
+	<description>Intro project for Spring Boot</description>
+	
+	<!--
+		Specificando questo parent, ereditiamo una serie di configurazioni e dipendenze dal POM
+		di Spring Boot. In questo modo, Maven scaricherà automaticamente le librerie essenziali
+		che ci permetteranno di avviare il framework Spring Boot e utilizzare le sue classi e
+		annotazioni per lo sviluppo delle nostre funzionalità. Inoltre, grazie a questo parent
+		non dobbiamo indicare esplicitamente la versione delle dipendenze aggiuntive più comuni
+		(es. lo starter web), in quanto esso specifica delle versioni di default, pienamente
+		compatibili con la versione di Spring Boot utilizzata. 
+	-->
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.3</version>
+		<relativePath/>
+	</parent>
+
+	<!-- 
+		Usando le properties del POM, possiamo sovrascrivere alcuni default di Spring Boot,
+		per esempio la versione da utilizzare per il server di nostra scelta.
+	-->
+	
+	<properties>
+		<!-- <java.version>19</java.version> -->
+		<!-- <tomcat.version>9</tomcat.version> -->
+		<!-- <jetty.version>10.0.8</jetty.version> -->
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			
+			<!--
+				Di default, lo starter web di Spring Boot utilizza il server Tomcat per eseguire la
+				webapp. Se vogliamo usare un altro server (es. Jetty), dobbiamo escludere la dipendenza
+				dallo starter di Tomcat, e aggiungere la dipendenza esplicita dallo starter di Jetty.
+			-->
+			
+			<!--
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+            -->
+		</dependency>
+		
+		<!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+    	<!-- 
+    		La dipendenza dal modulo devtools abilita il restart automatico dell'applicazione ogni 
+    		volta che modifichiamo qualcosa. Il tag optional limita la dipendenza a questo specifico 
+    		progetto: se altri progetti dovessero dipendere dal nostro, essi non erediteranno la
+    		dipendenza da devtools.
+    	-->
+	    			
+	    <dependency>	    	
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	        <optional>true</optional>
+    	</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+		
+			<!--
+				Il plugin di Spring Boot aggiunge alcuni goal utili a Maven. In particolare, il goal
+				"spring-boot:repackage" viene eseguito automaticamente dopo il goal "package" di Maven
+				per costruire un JAR o un WAR che contenga al suo interno tutte le dipendenze necessarie
+				alla corretta esecuzione dell'applicazione (incluse le librerie di Spring Boot). Il goal
+				"spring-boot:run" permette di eseguire l'applicazione senza produrre il suddetto archivio
+				JAR o WAR, cosa che può farci risparmiare un po' di tempo se abbiamo molte dipendenze.
+			-->
+			
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
