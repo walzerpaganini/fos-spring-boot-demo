@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller 
-@RequestMapping("mvc-api")
+@RequestMapping("api-mvc")
 public class DemoMvcController {
 	
 	@GetMapping("view")
